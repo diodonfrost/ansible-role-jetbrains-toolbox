@@ -11,11 +11,22 @@
   ansible.builtin.set_fact:
     jetbrains_toolbox_version: "{{ (jetbrains_index.content | from_json).TBA | map(attribute='build') | list | sort_versions | last }}"
 
+# This task avoids downloading JetBrains Toolbox every time
+- name: Linux | Check if JetBrains Toolbox is present
+  ansible.builtin.stat:
+    path: ~/.local/share/JetBrains/Toolbox/bin/jetbrains-toolbox
+  ignore_errors: yes
+  changed_when: false
+  failed_when: false
+  register: stat_result
+
 - name: Linux/Unix | Download JetBrains ToolBox
   ansible.builtin.unarchive:
     src: "{{ jetbrains_toolbox_pkg_url }}"
     dest: "{{ jetbrains_toolbox_tmp_folder }}"
     remote_src: yes
+  when: not stat_result.stat.exists
 
 - name: Linux/Unix | Install JetBrains ToolBox
   ansible.builtin.command: "{{ jetbrains_toolbox_install_exec}}"
+  when: not stat_result.stat.exists
