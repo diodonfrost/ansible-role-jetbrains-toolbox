@@ -1,0 +1,5 @@
+---
+# vars file for Linux system
+jetbrains_toolbox_pkg_url: "https://download.jetbrains.com/toolbox/jetbrains-toolbox-{{ jetbrains_toolbox_version }}.tar.gz"
+jetbrains_toolbox_tmp_folder: "/tmp"
+jetbrains_toolbox_install_exec: "{{ jetbrains_toolbox_tmp_folder }}/jetbrains-toolbox-{{ jetbrains_toolbox_version }}/jetbrains-toolbox"

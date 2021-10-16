@@ -1,0 +1,21 @@
+---
+
+- name: Linux/Unix | Find all versions of JetBrains Toolbox
+  ansible.builtin.uri:
+    url: https://data.services.jetbrains.com/products/releases?code=TBA&type=release
+    return_content: yes
+  register: jetbrains_index
+  check_mode: no
+
+- name: Linux/Unix | Finds the latest version of JetBrains Toolbox
+  ansible.builtin.set_fact:
+    jetbrains_toolbox_version: "{{ (jetbrains_index.content | from_json).TBA | map(attribute='build') | list | sort_versions | last }}"
+
+- name: Linux/Unix | Download JetBrains ToolBox
+  ansible.builtin.unarchive:
+    src: "{{ jetbrains_toolbox_pkg_url }}"
+    dest: "{{ jetbrains_toolbox_tmp_folder }}"
+    remote_src: yes
+
+- name: Linux/Unix | Install JetBrains ToolBox
+  ansible.builtin.command: "{{ jetbrains_toolbox_install_exec}}"
