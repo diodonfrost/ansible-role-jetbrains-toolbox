@@ -2,9 +2,15 @@
 dependency:
   name: galaxy
 driver:
-  name: delegated
+  name: docker
 platforms:
-  - name: instance
+  - name: linux
+    image: ${namespace:-diodonfrost}/${image:-ansible-ubuntu:20.04}
+    pre_build_image: yes
+    privileged: yes
+    volumes:
+      - /sys/fs/cgroup:/sys/fs/cgroup:ro
+      - /dev/fuse:/dev/fuse
 provisioner:
   name: ansible
 verifier:
