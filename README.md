@@ -1,38 +1,56 @@
-Role Name
-=========
+# ansible-role-jetbrains-toolbox
 
-A brief description of the role goes here.
+[![molecule](https://github.com/diodonfrost/ansible-role-jetbrains-toolbox/workflows/molecule/badge.svg)](https://github.com/diodonfrost/ansible-role-jetbrains-toolbox/actions)
+[![Ansible Galaxy](https://img.shields.io/badge/galaxy-diodonfrost.jetbrains_toolbox-660198.svg)](https://galaxy.ansible.com/diodonfrost/jetbrains_toolbox)
 
-Requirements
-------------
+Install JetBrains Toolbox
 
-Any pre-requisites that may not be covered by Ansible itself or the role should be mentioned here. For instance, if the role uses the EC2 module, it may be a good idea to mention in this section that the boto package is required.
+## Example Playbook
 
-Role Variables
---------------
+This example is taken from molecule/default/converge.yml and is tested on each push, pull request and release.
 
-A description of the settable variables for this role should go here, including any variables that are in defaults/main.yml, vars/main.yml, and any variables that can/should be set via parameters to the role. Any variables that are read from other roles and/or the global scope (ie. hostvars, group vars, etc.) should be mentioned here as well.
-
-Dependencies
-------------
-
-A list of other roles hosted on Galaxy should go here, plus any details in regards to parameters that may need to be set for other roles, or variables that are used from other roles.
-
-Example Playbook
-----------------
-
-Including an example of how to use your role (for instance, with variables passed in as parameters) is always nice for users too:
-
-    - hosts: servers
+    - name: converge
+      hosts: all
       roles:
-         - { role: username.rolename, x: 42 }
+         - role: diodonfrost.jetbrains_toolbox
 
-License
--------
+## Local Testing
 
-BSD
+This project uses [Molecule](http://molecule.readthedocs.io/) to aid in the
+development and testing.
 
-Author Information
-------------------
+To develop or test you'll need to have installed the following:
 
-An optional section for the role authors to include contact information, or a website (HTML is not allowed).
+* Linux (e.g. [Ubuntu](http://www.ubuntu.com/))
+* [Docker](https://www.docker.com/)
+* [Python](https://www.python.org/) (including python-pip)
+* [Ansible](https://www.ansible.com/)
+* [Molecule](http://molecule.readthedocs.io/)
+
+### Testing with Docker
+
+    # Install requirements
+    pip install -r requirements-dev.txt
+    
+    # Test ansible role with ubuntu 20.04
+    molecule test
+    
+    # Test ansible role with debian 11
+    image=ansible-debian:11 molecule test
+    
+    # Create debian 11 instance
+    image=ansible-debian:11 molecule create
+    
+    # Apply role on debian 11 instance
+    image=ansible-debian:11 molecule converge
+    
+    # Launch tests on debian 11 instance
+    image=ansible-debian:11 molecule verify
+
+## License
+
+Apache-2.0
+
+## Author Information
+
+This role was created in 2021 by diodonfrost.
