@@ -28,5 +28,5 @@
   when: not stat_result.stat.exists
 
 - name: Linux/Unix | Install JetBrains ToolBox
-  ansible.builtin.command: "{{ jetbrains_toolbox_install_exec}}"
+  ansible.builtin.command: "{{ jetbrains_toolbox_install_exec }}"
   when: not stat_result.stat.exists
